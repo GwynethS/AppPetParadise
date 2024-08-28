@@ -1,15 +1,11 @@
 import {
   FlatList,
-  Image,
   StatusBar,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import React from "react";
-import { colors } from "../global/colors";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 import CategoryCard from "../components/CategoryCard";
 
 const Home = () => {
@@ -39,36 +35,22 @@ const Home = () => {
     console.log("Pressed");
   };
   return (
-    <View style={styles.contaienr}>
+    <View
+      style={styles.container}
+    >
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={colors.marfil}
+        backgroundColor="#fff"
       ></StatusBar>
-      <View style={styles.heroSection}>
-        <Text style={[styles.textHeader3, { fontStyle: "italic" }]}>
-          Todo lo que tu mascota necesita y más, bienvenido a
-        </Text>
-        <Text style={styles.shopName}>Pet Paradise</Text>
-        <Image
-          style={styles.imgHeroSection}
-          source={{ uri: "https://i.postimg.cc/GtXCh3gj/home-banner-pet.png" }}
-        ></Image>
-        <Text style={styles.textParagraph}>
-          ¡Descubre el paraíso de las mascotas desde la comodidad de tu hogar y
-          bríndales el amor y los cuidados que se merecen!
-        </Text>
-        <ButtonFlatOpacity text="Comprar ahora" onPress={onPress}>
-          <FontAwesome6 name="bag-shopping" size={24} color="#fff" />
-        </ButtonFlatOpacity>
-      </View>
-      <Text style={[styles.textHeader2, { marginVertical: 20 }]}>
+      <Text style={[styles.textHeader2, { marginVertical: 40 }]}>
         CATEGORÍAS
       </Text>
       <FlatList
         data={categories}
         keyExtractor={(item) => item.id}
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
+        showsVerticalScrollIndicator={false}
+        numColumns={2}
+        columnWrapperStyle={{gap: 20, marginBottom: 20}}
         renderItem={({ item }) => <CategoryCard item={item}></CategoryCard>}
         style={styles.cardsContainer}
       ></FlatList>
@@ -83,13 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-  },
-  heroSection: {
-    backgroundColor: colors.marfil,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "5%",
-    gap: 20,
   },
   textHeader2: {
     fontFamily: "OpenSans",
@@ -124,6 +99,6 @@ const styles = StyleSheet.create({
     objectFit: "cover",
   },
   cardsContainer: {
-    margin: "5%",
+    marginHorizontal: "5%",
   },
 });

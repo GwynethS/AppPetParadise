@@ -15,7 +15,7 @@ const CategoryCard = ({ item }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
-      style={{ width: screenWidth / 2 - 30, marginRight: 20 }}
+      style={{ width: screenWidth / 2 - 30}}
       onPress={onPress}
     >
       <Image style={styles.imgCard} source={{ uri: item.uri }}></Image>

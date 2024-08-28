@@ -21,13 +21,14 @@ export default ButtonFlatOpacity;
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#000",
-    borderRadius: 16,
+    borderRadius: 24,
     paddingHorizontal: "5%",
     paddingVertical: "4%",
   },
   btnContent: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: 10,
   },
   btnText: {
