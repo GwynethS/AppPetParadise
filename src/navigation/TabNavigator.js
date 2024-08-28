@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, Shop } from "../screens";
+import { Home, Profile, Shop } from "../screens";
 import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { colors } from "../global/colors";
 
@@ -15,8 +15,7 @@ const TabNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: colors.morado,
         tabBarStyle: {
-          borderTopStartRadius: 24,
-          borderTopEndRadius: 24,
+          backgroundColor: '#fff',
           height: 80,
         },
         tabBarLabelStyle:{
@@ -50,10 +49,18 @@ const TabNavigator = () => {
           ),
         }}
       />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: "Perfil",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-alt" size={24} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
 export default TabNavigator;
-
-const styles = StyleSheet.create({});
