@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     width: 150,
   },
   headerContainer: {
-    // flex: 1,
     justifyContent: "center",
   },
   textHeader1: {
