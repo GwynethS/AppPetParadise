@@ -1,10 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, Profile, Shop } from "../screens";
+import { Home, ProductDetail, Profile, Shop } from "../screens";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { colors } from "../global/colors";
+import ShopStack from "./ShopStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Shop"
-        component={Shop}
+        component={ShopStack}
         options={{
           tabBarLabel: "Tienda",
           tabBarIcon: ({ color }) => (

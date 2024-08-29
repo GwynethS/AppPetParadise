@@ -10,7 +10,7 @@ const ButtonFlatOpacity = ({ children, text, btnStyle, onPress }) => {
     >
       <View style={styles.btnContent}>
         {children}
-        <Text style={styles.btnText}>{text}</Text>
+        {text && <Text style={styles.btnText}>{text}</Text>}
       </View>
     </TouchableOpacity>
   );
