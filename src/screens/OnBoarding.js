@@ -15,12 +15,12 @@ const OnBoarding = ({ navigation }) => {
         backgroundColor={colors.marfil}
       ></StatusBar>
       <View style={styles.container}>
-        <Text style={[styles.textHeader3, { fontStyle: "italic" }]}>
+        <Text style={[styles.textHeader3]}>
           Todo lo que tu mascota necesita y más, bienvenido a
         </Text>
         <Text style={styles.shopName}>Pet Paradise</Text>
         <Image
-          style={styles.imgHeroSection}
+          style={styles.img}
           source={{ uri: "https://i.postimg.cc/GtXCh3gj/home-banner-pet.png" }}
         ></Image>
         <Text style={styles.textParagraph}>
@@ -49,34 +49,27 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     padding: "5%",
   },
-  textHeader2: {
-    fontFamily: "OpenSans",
-    fontWeight: "700",
-    fontSize: 20,
-    textAlign: "center",
-  },
   textHeader3: {
-    fontFamily: "OpenSans",
-    fontWeight: "700",
+    fontFamily: "OpenSansBoldItalic",
     fontSize: 18,
     textAlign: "center",
   },
   textHeader4: {
-    fontFamily: "OpenSans",
+    fontFamily: "OpenSansBold",
     fontWeight: "700",
     fontSize: 16,
     textAlign: "center",
   },
   shopName: {
-    fontFamily: "DancingScript",
+    fontFamily: "DancingScriptBold",
     fontSize: 60,
   },
   textParagraph: {
-    fontFamily: "OpenSans",
+    fontFamily: "OpenSansRegular",
     fontSize: 16,
     textAlign: "center",
   },
-  imgHeroSection: {
+  img: {
     height: 250,
     width: 250,
     objectFit: "cover",

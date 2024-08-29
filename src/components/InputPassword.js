@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputContainer: {
-    fontFamily: "OpenSans",
+    fontFamily: "OpenSansRegular",
     fontWeight: "normal",
     flexDirection: "row",
     gap: 16,

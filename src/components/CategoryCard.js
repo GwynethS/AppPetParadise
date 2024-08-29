@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     objectFit: "cover",
   },
   textHeader3: {
-    fontFamily: "OpenSans",
-    fontWeight: "700",
+    fontFamily: "OpenSansBold",
     fontSize: 18,
     textAlign: "center",
   },

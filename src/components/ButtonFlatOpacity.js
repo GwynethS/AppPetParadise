@@ -32,9 +32,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   btnText: {
-    fontFamily: "OpenSans",
+    fontFamily: "OpenSansBold",
     fontSize: 16,
     color: "#fff",
-    fontWeight: "700",
   },
 });

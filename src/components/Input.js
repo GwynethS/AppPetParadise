@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputContainer: {
-    fontFamily: "OpenSans",
-    fontWeight: "normal",
+    fontFamily: "OpenSansRegular",
     flexDirection: "row",
     gap: 16,
     alignItems: "center",
@@ -77,10 +76,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textError: {
+    fontFamily: "OpenSansRegular",
     textAlign: "right",
     paddingRight: 8,
     color: colors.errorText,
-    fontWeight: "500",
     marginTop: 8,
   },
 });

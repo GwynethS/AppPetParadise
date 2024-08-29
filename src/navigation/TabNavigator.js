@@ -19,7 +19,7 @@ const TabNavigator = () => {
           height: 80,
         },
         tabBarLabelStyle:{
-          fontFamily: 'OpenSans',
+          fontFamily: 'OpenSansRegular',
           fontSize: 16,
           marginTop: 5,
           marginBottom: 10

@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import CategoryCard from "../components/CategoryCard";
+import { colors } from "../global/colors";
 
 const Home = () => {
   const categories = [
@@ -40,7 +41,7 @@ const Home = () => {
     >
       <StatusBar
         barStyle="dark-content"
-        backgroundColor="#fff"
+        backgroundColor={colors.background}
       ></StatusBar>
       <Text style={[styles.textHeader2, { marginVertical: 40 }]}>
         CATEGORÍAS
@@ -63,33 +64,16 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
     alignItems: "center",
   },
   textHeader2: {
-    fontFamily: "OpenSans",
-    fontWeight: "700",
+    fontFamily: "OpenSansBold",
     fontSize: 20,
     textAlign: "center",
   },
-  textHeader3: {
-    fontFamily: "OpenSans",
-    fontWeight: "700",
-    fontSize: 18,
-    textAlign: "center",
-  },
-  textHeader4: {
-    fontFamily: "OpenSans",
-    fontWeight: "700",
-    fontSize: 16,
-    textAlign: "center",
-  },
-  shopName: {
-    fontFamily: "DancingScript",
-    fontSize: 40,
-  },
   textParagraph: {
-    fontFamily: "OpenSans",
+    fontFamily: "OpenSansRegular",
     fontSize: 16,
     textAlign: "center",
   },
