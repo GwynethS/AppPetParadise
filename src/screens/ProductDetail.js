@@ -22,7 +22,10 @@ const ProductDetail = ({ route }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}
+    >
       <StatusBar
         barStyle="dark-content"
         backgroundColor={colors.background}
@@ -33,10 +36,13 @@ const ProductDetail = ({ route }) => {
         <Text style={styles.textHeader2}>{item.price}</Text>
       </View>
       <View style={styles.inputContainer}>
-        <ButtonIcon>
+        <ButtonIcon btnStyle={styles.btnIcon}>
           <FontAwesome5 name="minus" size={24} color={colors.paloRosa} />
         </ButtonIcon>
-        <Input value="1" inputMode="numeric"></Input>
+        <Input value="1" inputMode="numeric" style={{ flex: 1 }}></Input>
+        <ButtonIcon>
+          <FontAwesome5 name="plus" size={24} color={colors.paloRosa} />
+        </ButtonIcon>
       </View>
       <ButtonFlatOpacity
         text="Añadir"
@@ -51,9 +57,10 @@ export default ProductDetail;
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: colors.background,
     padding: "5%",
+    gap: 25,
   },
   img: {
     height: 400,
@@ -73,6 +80,21 @@ const styles = StyleSheet.create({
   },
   productInfoContainer: {
     gap: 10,
-    marginVertical: "10%",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 20,
+  },
+  btnIcon: {
+    shadowColor: "#979797",
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.41,
+    shadowRadius: 9.11,
+
+    elevation: 14,
   },
 });

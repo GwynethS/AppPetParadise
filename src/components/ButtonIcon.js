@@ -18,7 +18,7 @@ export default ButtonIcon
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#fff",
-    borderRadius: 50,
+    borderRadius: 24,
     paddingHorizontal: "5%",
     paddingVertical: "5%",
     alignItems: "center",
