@@ -15,18 +15,16 @@ const OnBoarding = ({ navigation }) => {
         backgroundColor={colors.marfil}
       ></StatusBar>
       <View style={styles.container}>
-        <Text style={[styles.textHeader3]}>
-          Todo lo que tu mascota necesita y más, bienvenido a
-        </Text>
-        <Text style={styles.shopName}>Pet Paradise</Text>
+        <View>
+          <Text style={styles.shopName}>Pet Paradise</Text>
+          <Text style={[styles.textHeader3]}>
+            Todo lo que tu mascota necesita y más
+          </Text>
+        </View>
         <Image
           style={styles.img}
           source={{ uri: "https://i.postimg.cc/GtXCh3gj/home-banner-pet.png" }}
         ></Image>
-        <Text style={styles.textParagraph}>
-          ¡Descubre el paraíso de las mascotas desde la comodidad de tu hogar y
-          bríndales el amor y los cuidados que se merecen!
-        </Text>
         <ButtonFlatOpacity
           text="Ir al inicio"
           onPress={onPress}
@@ -63,11 +61,8 @@ const styles = StyleSheet.create({
   shopName: {
     fontFamily: "DancingScriptBold",
     fontSize: 60,
-  },
-  textParagraph: {
-    fontFamily: "OpenSansRegular",
-    fontSize: 16,
-    textAlign: "center",
+    marginVertical: 30,
+    textAlign: 'center'
   },
   img: {
     height: 250,
