@@ -1,15 +1,10 @@
-import {
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, StatusBar, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../global/colors";
-import SearchInput from "../components/SearchInput";
-import ProductCard from "../components/ProductCard";
+import ProductCartItem from "../components/ProductCartItem";
+import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 
-const Shop = ({ navigation }) => {
+const Cart = () => {
   const products = [
     {
       id: 1,
@@ -66,27 +61,50 @@ const Shop = ({ navigation }) => {
         barStyle="dark-content"
         backgroundColor={colors.background}
       ></StatusBar>
-      <SearchInput placeholder="Ingresar producto"></SearchInput>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
-        numColumns={2}
-        columnWrapperStyle={{ gap: 20, marginBottom: 20 }}
-        renderItem={({ item }) => <ProductCard item={item} navigation={navigation}></ProductCard>}
+        style={{ height: "90%" }}
+        renderItem={({ item }) => (
+          <ProductCartItem item={item}></ProductCartItem>
+        )}
       ></FlatList>
+      <View style={styles.cartFooter}>
+        <View style={styles.cartTotal}>
+          <Text style={styles.textHeader3}>Total: </Text>
+          <Text style={styles.textTotal}>S/. 100.00</Text>
+        </View>
+        <ButtonFlatOpacity text="Comprar"></ButtonFlatOpacity>
+      </View>
     </View>
   );
 };
 
-export default Shop;
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.background,
     padding: "5%",
     paddingBottom: 0,
-    gap: 30,
+    backgroundColor: colors.background,
   },
+  textHeader3: {
+    fontFamily: "OpenSansSemiBold",
+    fontSize: 18,
+  },
+  textTotal: {
+    fontFamily: "OpenSansBold",
+    fontSize: 18,
+  },
+  cartFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "10%",
+  },
+  cartTotal: {
+    flexDirection: "row",
+    alignItems: 'baseline'
+  }
 });

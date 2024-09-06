@@ -37,11 +37,11 @@ const ProductDetail = ({ route }) => {
       </View>
       <View style={styles.inputContainer}>
         <ButtonIcon btnStyle={styles.btnIcon}>
-          <FontAwesome5 name="minus" size={24} color={colors.paloRosa} />
+          <FontAwesome5 name="minus" size={20} color={colors.paloRosa} />
         </ButtonIcon>
-        <Input value="1" inputMode="numeric" style={{ flex: 1 }}></Input>
-        <ButtonIcon>
-          <FontAwesome5 name="plus" size={24} color={colors.paloRosa} />
+        <Input value="1" inputMode="numeric" style={{ width: 70 }} styleInputContainer={{padding: 10}}></Input>
+        <ButtonIcon btnStyle={styles.btnIcon}>
+          <FontAwesome5 name="plus" size={20} color={colors.paloRosa} />
         </ButtonIcon>
       </View>
       <ButtonFlatOpacity
@@ -71,19 +71,17 @@ const styles = StyleSheet.create({
   textHeader4: {
     fontFamily: "OpenSansSemiBold",
     fontSize: 18,
-    // textAlign: "center",
   },
   textHeader2: {
     fontFamily: "OpenSansBold",
     fontSize: 24,
-    // textAlign: "center",
   },
   productInfoContainer: {
     gap: 10,
   },
   inputContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     gap: 20,
   },
   btnIcon: {
@@ -96,5 +94,6 @@ const styles = StyleSheet.create({
     shadowRadius: 9.11,
 
     elevation: 14,
+    paddingVertical: 10
   },
 });

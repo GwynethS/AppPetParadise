@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, ProductDetail, Profile, Shop } from "../screens";
+import { Cart, Home, Profile } from "../screens";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -47,6 +47,16 @@ const TabNavigator = () => {
           tabBarLabel: "Tienda",
           tabBarIcon: ({ color }) => (
             <FontAwesome6 name="shop" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          tabBarLabel: "Carrito",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 name="cart-shopping" size={24} color={color} />
           ),
         }}
       />

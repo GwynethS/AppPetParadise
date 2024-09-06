@@ -16,6 +16,9 @@ const ProductCard = ({ item, navigation }) => {
     console.log("product press");
     navigation.navigate("ProductDetail", { item });
   };
+  const onPressBtn = () => {
+    console.log("ADD PRODUCT");
+  };
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -29,7 +32,7 @@ const ProductCard = ({ item, navigation }) => {
         <ButtonFlatOpacity
           text="Añadir"
           btnStyle={{ backgroundColor: colors.morado, width: "100%" }}
-          onPress={onPress}
+          onPress={onPressBtn}
         ></ButtonFlatOpacity>
       </View>
     </TouchableOpacity>
