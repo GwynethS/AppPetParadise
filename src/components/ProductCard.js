@@ -28,7 +28,7 @@ const ProductCard = ({ item, navigation }) => {
       <Image style={styles.imgCard} source={{ uri: item.imgUrl }}></Image>
       <View style={styles.productInfoContainer}>
         <Text style={styles.textHeader4}>{item.name}</Text>
-        <Text style={styles.textParagraph}>{item.price}</Text>
+        <Text style={styles.textParagraph}>S/. {item.price.toFixed(2)}</Text>
         <ButtonFlatOpacity
           text="Añadir"
           btnStyle={{ backgroundColor: colors.morado, width: "100%" }}

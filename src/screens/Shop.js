@@ -1,19 +1,15 @@
-import {
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  View,
-} from "react-native";
-import React from "react";
+import { FlatList, StatusBar, StyleSheet, View } from "react-native";
+import React, { useCallback } from "react";
 import { colors } from "../global/colors";
 import SearchInput from "../components/SearchInput";
 import ProductCard from "../components/ProductCard";
 import { useGetProductsQuery } from "../services/shop";
+import { useFocusEffect } from "@react-navigation/native";
 
-const Shop = ({ navigation }) => {
-  const {data: products, isLoading} = useGetProductsQuery();
+const Shop = ({ route, navigation }) => {
+  const category = route?.params?.category || null;
 
-  console.log(products);
+  const {data: products, isLoading} = useGetProductsQuery(category);
 
   return (
     <View style={styles.container}>
@@ -28,7 +24,9 @@ const Shop = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         columnWrapperStyle={{ gap: 20, marginBottom: 20 }}
-        renderItem={({ item }) => <ProductCard item={item} navigation={navigation}></ProductCard>}
+        renderItem={({ item }) => (
+          <ProductCard item={item} navigation={navigation}></ProductCard>
+        )}
       ></FlatList>
     </View>
   );

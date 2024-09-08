@@ -1,25 +1,18 @@
-import {
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, StatusBar, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import CategoryCard from "../components/CategoryCard";
 import { colors } from "../global/colors";
 import { useGetCategoriesQuery } from "../services/shop";
 
-const Home = () => {
-  const {data: categories, isLoading} = useGetCategoriesQuery();
-  
-  const onPress = () => {
-    console.log("Pressed");
+const Home = ({ navigation }) => {
+  const { data: categories, isLoading } = useGetCategoriesQuery();
+
+  const onPressCategory = (category) => {
+    console.log("Go to", category);
+    navigation.navigate("Products", { category });
   };
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <StatusBar
         barStyle="dark-content"
         backgroundColor={colors.background}
@@ -32,8 +25,13 @@ const Home = () => {
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        columnWrapperStyle={{gap: 20, marginBottom: 20}}
-        renderItem={({ item }) => <CategoryCard item={item}></CategoryCard>}
+        columnWrapperStyle={{ gap: 20, marginBottom: 20 }}
+        renderItem={({ item }) => (
+          <CategoryCard
+            item={item}
+            onPress={() => onPressCategory(item.name.toLowerCase())}
+          ></CategoryCard>
+        )}
         style={styles.cardsContainer}
       ></FlatList>
     </View>

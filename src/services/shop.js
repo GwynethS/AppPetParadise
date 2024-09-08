@@ -11,7 +11,7 @@ export const shopApi = createApi({
     }),
     getProducts: builder.query({
       query: (category) =>
-        // `/products.json?orderBy="category"&equalTo="${category}"`,
+        category ? `/products.json?orderBy="category"&equalTo="${category}"` :
         `/products.json`,
       transformResponse: (response) => {
         const data = Object.values(response);

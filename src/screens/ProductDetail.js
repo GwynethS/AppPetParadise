@@ -33,7 +33,7 @@ const ProductDetail = ({ route }) => {
       <Image style={styles.img} source={{ uri: item.imgUrl }}></Image>
       <View style={styles.productInfoContainer}>
         <Text style={styles.textHeader4}>{item.name}</Text>
-        <Text style={styles.textHeader2}>{item.price}</Text>
+        <Text style={styles.textHeader2}>S/. {item.price.toFixed(2)}</Text>
       </View>
       <View style={styles.inputContainer}>
         <ButtonIcon btnStyle={styles.btnIcon}>

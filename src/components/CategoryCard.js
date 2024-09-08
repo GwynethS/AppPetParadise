@@ -7,11 +7,9 @@ import {
 } from "react-native";
 import React from "react";
 
-const CategoryCard = ({ item }) => {
+const CategoryCard = ({ item, onPress }) => {
   const screenWidth = Dimensions.get("window").width;
-  const onPress = () => {
-    console.log("card press");
-  };
+  
   return (
     <TouchableOpacity
       activeOpacity={0.9}
