@@ -8,30 +8,11 @@ import {
 import React from "react";
 import CategoryCard from "../components/CategoryCard";
 import { colors } from "../global/colors";
+import { useGetCategoriesQuery } from "../services/shop";
 
 const Home = () => {
-  const categories = [
-    {
-      id: 1,
-      name: "ROPA",
-      uri: "https://i.postimg.cc/9QKc7Mm8/category-clothes.jpg",
-    },
-    {
-      id: 2,
-      name: "ACCESORIOS",
-      uri: "https://i.postimg.cc/L8nH5fpg/category-accessories.jpg",
-    },
-    {
-      id: 3,
-      name: "JUGUETES",
-      uri: "https://i.postimg.cc/7LzwMkbx/category-toys.jpg",
-    },
-    {
-      id: 4,
-      name: "COMIDA",
-      uri: "https://i.postimg.cc/Y9wkdsmQ/category-food.jpg",
-    },
-  ];
+  const {data: categories, isLoading} = useGetCategoriesQuery();
+  
   const onPress = () => {
     console.log("Pressed");
   };

@@ -1,0 +1,1 @@
+export const URL_FIREBASE = "https://apppetparadise-default-rtdb.firebaseio.com/";

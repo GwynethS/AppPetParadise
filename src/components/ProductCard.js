@@ -25,7 +25,7 @@ const ProductCard = ({ item, navigation }) => {
       style={[styles.card, { width: screenWidth / 2 - 30 }]}
       onPress={onPress}
     >
-      <Image style={styles.imgCard} source={{ uri: item.uri }}></Image>
+      <Image style={styles.imgCard} source={{ uri: item.imgUrl }}></Image>
       <View style={styles.productInfoContainer}>
         <Text style={styles.textHeader4}>{item.name}</Text>
         <Text style={styles.textParagraph}>{item.price}</Text>
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 16,
     backgroundColor: "#fff",
+    justifyContent: 'space-between'
   },
   imgCard: {
     borderTopLeftRadius: 16,

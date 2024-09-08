@@ -30,7 +30,7 @@ const ProductDetail = ({ route }) => {
         barStyle="dark-content"
         backgroundColor={colors.background}
       ></StatusBar>
-      <Image style={styles.img} source={{ uri: item.uri }}></Image>
+      <Image style={styles.img} source={{ uri: item.imgUrl }}></Image>
       <View style={styles.productInfoContainer}>
         <Text style={styles.textHeader4}>{item.name}</Text>
         <Text style={styles.textHeader2}>{item.price}</Text>

@@ -18,7 +18,7 @@ const CategoryCard = ({ item }) => {
       style={{ width: screenWidth / 2 - 30}}
       onPress={onPress}
     >
-      <Image style={styles.imgCard} source={{ uri: item.uri }}></Image>
+      <Image style={styles.imgCard} source={{ uri: item.imgUrl }}></Image>
       <Text style={[styles.textHeader3, { marginVertical: 10 }]}>
         {item.name}
       </Text>
