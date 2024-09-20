@@ -6,14 +6,63 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import InputPassword from "../components/InputPassword";
 import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { colors } from "../global/colors";
+import { useLoginMutation } from "../services/auth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/auth/authSlice";
 
 const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorUsername, setErrorUsername] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [triggerLogin, { data, isSuccess, isError, error }] = useLoginMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isError) {
+      setErrorEmail("email existente");
+    }
+  }, [isError]);
+
+  const onSubmit = async () => {
+    try {
+      //registerSchema.validateSync({ email, password, confirmPassword });
+      const { data } = await triggerLogin({ email, password });
+      //deleteSession();
+      //insertSession(data);
+      dispatch(
+        setUser({
+          email: data.email,
+          idToken: data.idToken,
+          localId: data.localId,
+        })
+      );
+
+      navigation.navigate("Main", {
+        screen: "Home"
+      });
+    } catch (error) {
+      console.log(error);
+      switch (error.path) {
+        case "email":
+          setErrorEmail(error.message);
+          setErrorPassword("");
+          break;
+        case "password":
+          setErrorEmail("");
+          setErrorPassword(error.message);
+          break;
+      }
+    }
+  };
+
   const redirectTo = () => {
     navigation.navigate("SignUp");
   };
@@ -32,12 +81,12 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.formContainer}>
         <View style={styles.inputsContainer}>
-          <Input placeholder="Email">
+          <Input placeholder="Email" value={email} onChangeText={(text) => setEmail(text)}>
             <FontAwesome name="envelope" size={22} color="#676767" />
           </Input>
-          <InputPassword></InputPassword>
+          <InputPassword value={password} onChangeText={(text) => setPassword(text)}></InputPassword>
         </View>
-        <ButtonFlatOpacity text="Iniciar sesión"></ButtonFlatOpacity>
+        <ButtonFlatOpacity text="Iniciar sesión" onPress={onSubmit}></ButtonFlatOpacity>
       </View>
 
       <View style={styles.toSignUpContainer}>

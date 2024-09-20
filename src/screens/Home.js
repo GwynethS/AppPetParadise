@@ -5,7 +5,7 @@ import { colors } from "../global/colors";
 import { useGetCategoriesQuery } from "../services/shop";
 
 const Home = ({ navigation }) => {
-  const { data: categories, isLoading } = useGetCategoriesQuery();
+  const { data: categories, isLoading, refetch} = useGetCategoriesQuery();
 
   const onPressCategory = (category) => {
     navigation.navigate("Shop", {

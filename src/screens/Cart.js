@@ -3,10 +3,27 @@ import React from "react";
 import { colors } from "../global/colors";
 import ProductCartItem from "../components/ProductCartItem";
 import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../features/cart/cartSlice";
+import { usePostOrderMutation } from "../services/shop";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const localId = useSelector((state) => state.auth.localId);
+  const [triggerPostOrder] = usePostOrderMutation();
+  const dispatch = useDispatch();
+
+  const onCheckout = () => {
+    if(cart.items.length > 0){
+      const createdAt = new Date().toLocaleString();
+      const order = {
+        ...cart,
+        createdAt,
+      };
+      triggerPostOrder({ localId, order });
+      dispatch(clearCart());
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -28,7 +45,10 @@ const Cart = () => {
           <Text style={styles.textHeader3}>Total: </Text>
           <Text style={styles.textTotal}>S/. {cart.total.toFixed(2)}</Text>
         </View>
-        <ButtonFlatOpacity text="Comprar"></ButtonFlatOpacity>
+        <ButtonFlatOpacity
+          text="Comprar"
+          onPress={onCheckout}
+        ></ButtonFlatOpacity>
       </View>
     </View>
   );

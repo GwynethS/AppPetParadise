@@ -16,7 +16,7 @@ import Feather from "@expo/vector-icons/Feather";
 const Shop = ({ route, navigation }) => {
   const category = route?.params?.category || null;
 
-  const { data: products, isLoading } = useGetProductsQuery(category);
+  const { data: products, isLoading, refetch } = useGetProductsQuery(category);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
 
