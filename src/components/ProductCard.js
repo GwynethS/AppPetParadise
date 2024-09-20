@@ -9,16 +9,22 @@ import {
 import React from "react";
 import ButtonFlatOpacity from "./ButtonFlatOpacity";
 import { colors } from "../global/colors";
+import { useDispatch } from "react-redux";
+import { addItemCart } from "../features/cart/cartSlice";
 
 const ProductCard = ({ item, navigation }) => {
   const screenWidth = Dimensions.get("window").width;
+  const dispatch = useDispatch();
+
   const onPress = () => {
-    console.log("product press");
     navigation.navigate("ProductDetail", { item });
   };
-  const onPressBtn = () => {
-    console.log("ADD PRODUCT");
+  
+  const onAddProduct = () => {
+    dispatch(addItemCart({...item, quantity: 1 }))
+    navigation.navigate("Cart");
   };
+
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -32,7 +38,7 @@ const ProductCard = ({ item, navigation }) => {
         <ButtonFlatOpacity
           text="Añadir"
           btnStyle={{ backgroundColor: colors.morado, width: "100%" }}
-          onPress={onPressBtn}
+          onPress={onAddProduct}
         ></ButtonFlatOpacity>
       </View>
     </TouchableOpacity>

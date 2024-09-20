@@ -8,8 +8,10 @@ const Home = ({ navigation }) => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
 
   const onPressCategory = (category) => {
-    console.log("Go to", category);
-    navigation.navigate("Products", { category });
+    navigation.navigate("Shop", {
+      screen: "Products",
+      params: { category },
+    });
   };
   return (
     <View style={styles.container}>

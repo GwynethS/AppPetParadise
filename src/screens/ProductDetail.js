@@ -6,19 +6,36 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { colors } from "../global/colors";
 import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 import Input from "../components/Input";
 import ButtonIcon from "../components/ButtonIcon";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { useDispatch } from "react-redux";
+import { addItemCart } from "../features/cart/cartSlice";
 
-const ProductDetail = ({ route }) => {
+const ProductDetail = ({ route, navigation }) => {
   const { item } = route.params;
-  console.log(item);
+  const [quantityProduct, setQuantityProduct] = useState(1);
+  const dispatch = useDispatch();
 
-  const onPress = () => {
-    console.log("ADD");
+  const handleButtonAdd = () => {
+    setQuantityProduct(Number(quantityProduct) + 1);
+  };
+
+  const handleInputChange = () => {
+    const value = Number(quantityProduct);
+    if (value < 1) setQuantityProduct(1);
+  };
+
+  const handleButtonReduce = () => {
+    if (quantityProduct > 1) setQuantityProduct(Number(quantityProduct) - 1);
+  };
+
+  const onAddProduct = () => {
+    dispatch(addItemCart({ ...item, quantity: Number(quantityProduct) }));
+    navigation.navigate("Cart");
   };
 
   return (
@@ -36,18 +53,25 @@ const ProductDetail = ({ route }) => {
         <Text style={styles.textHeader2}>S/. {item.price.toFixed(2)}</Text>
       </View>
       <View style={styles.inputContainer}>
-        <ButtonIcon btnStyle={styles.btnIcon}>
+        <ButtonIcon btnStyle={styles.btnIcon} onPress={handleButtonReduce}>
           <FontAwesome5 name="minus" size={20} color={colors.paloRosa} />
         </ButtonIcon>
-        <Input value="1" inputMode="numeric" style={{ width: 70 }} styleInputContainer={{padding: 10}}></Input>
-        <ButtonIcon btnStyle={styles.btnIcon}>
+        <Input
+          value={quantityProduct.toString()}
+          onChangeText={(text) => setQuantityProduct(text)}
+          onBlur={handleInputChange}
+          inputMode="numeric"
+          style={{ width: 70 }}
+          styleInputContainer={{ padding: 10 }}
+        ></Input>
+        <ButtonIcon btnStyle={styles.btnIcon} onPress={handleButtonAdd}>
           <FontAwesome5 name="plus" size={20} color={colors.paloRosa} />
         </ButtonIcon>
       </View>
       <ButtonFlatOpacity
         text="Añadir"
         btnStyle={{ backgroundColor: colors.morado, width: "100%" }}
-        onPress={onPress}
+        onPress={onAddProduct}
       ></ButtonFlatOpacity>
     </ScrollView>
   );
@@ -94,6 +118,6 @@ const styles = StyleSheet.create({
     shadowRadius: 9.11,
 
     elevation: 14,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
 });

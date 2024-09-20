@@ -1,27 +1,57 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ButtonIcon from "./ButtonIcon";
 import Input from "./Input";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { colors } from "../global/colors";
+import Feather from "@expo/vector-icons/Feather";
+import { useDispatch } from "react-redux";
+import {
+  addItemCart,
+  reduceItemCart,
+  removeItemCart,
+} from "../features/cart/cartSlice";
 
 const ProductCartItem = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const onPressRemove = () => {
+    dispatch(removeItemCart({ ...item }));
+  };
+
+  const handleAddItemCart = () => {
+    dispatch(addItemCart({ ...item, quantity: 1 }));
+  };
+
+  const handleReduceItemCart = () => {
+    if (item.quantity > 1) dispatch(reduceItemCart({ ...item }));
+  };
+
   return (
     <View style={styles.card}>
-      <Image style={styles.imgCard} source={{ uri: item.uri }}></Image>
+      <Image style={styles.imgCard} source={{ uri: item.imgUrl }}></Image>
       <View style={{ gap: 10 }}>
         <Text style={styles.textParagraph}>{item.name}</Text>
-        <Text style={styles.textHeader4}>{item.price}</Text>
+        <Text style={styles.textHeader4}>S/. {item.subTotal.toFixed(2)}</Text>
         <View style={styles.inputContainer}>
-        <ButtonIcon btnStyle={styles.btnIcon}>
-          <FontAwesome5 name="minus" size={20} color={colors.paloRosa} />
-        </ButtonIcon>
-        <Input value="1" inputMode="numeric" style={{ width: 60 }} styleInputContainer={{padding: 10}}></Input>
-        <ButtonIcon btnStyle={styles.btnIcon}>
-          <FontAwesome5 name="plus" size={20} color={colors.paloRosa} />
-        </ButtonIcon>
+          <ButtonIcon btnStyle={styles.btnIcon} onPress={handleReduceItemCart}>
+            <FontAwesome5 name="minus" size={20} color={colors.paloRosa} />
+          </ButtonIcon>
+          <Input
+            value={item.quantity.toString()}
+            inputMode="numeric"
+            style={{ width: 60 }}
+            styleInputContainer={{ padding: 10 }}
+            readOnly={true}
+          ></Input>
+          <ButtonIcon btnStyle={styles.btnIcon} onPress={handleAddItemCart}>
+            <FontAwesome5 name="plus" size={20} color={colors.paloRosa} />
+          </ButtonIcon>
+        </View>
       </View>
-      </View>
+      <Pressable style={styles.btnRemoveProduct} onPress={onPressRemove}>
+        <Feather name="x" size={20} color={colors.paloRosa} />
+      </Pressable>
     </View>
   );
 };
@@ -34,6 +64,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
     marginBottom: 30,
+    position: "relative",
   },
   imgCard: {
     borderRadius: 16,
@@ -48,6 +79,8 @@ const styles = StyleSheet.create({
   textParagraph: {
     fontFamily: "OpenSansRegular",
     fontSize: 16,
+    flexWrap: "wrap",
+    width: "90%",
   },
   inputContainer: {
     flexDirection: "row",
@@ -65,5 +98,10 @@ const styles = StyleSheet.create({
     elevation: 14,
     paddingVertical: 10,
     paddingHorizontal: 16,
+  },
+  btnRemoveProduct: {
+    position: "absolute",
+    top: 0,
+    right: 0,
   },
 });
