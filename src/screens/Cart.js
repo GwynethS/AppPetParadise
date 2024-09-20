@@ -7,21 +7,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../features/cart/cartSlice";
 import { usePostOrderMutation } from "../services/shop";
 
-const Cart = () => {
+const Cart = ({navigation}) => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.auth);
   const localId = useSelector((state) => state.auth.localId);
   const [triggerPostOrder] = usePostOrderMutation();
   const dispatch = useDispatch();
 
   const onCheckout = () => {
-    if(cart.items.length > 0){
-      const createdAt = new Date().toLocaleString();
-      const order = {
-        ...cart,
-        createdAt,
-      };
-      triggerPostOrder({ localId, order });
-      dispatch(clearCart());
+    if (cart.items.length > 0) {
+      if (user.localId) {
+        const createdAt = new Date().toLocaleString();
+        const order = {
+          ...cart,
+          createdAt,
+        };
+        triggerPostOrder({ localId, order });
+        dispatch(clearCart());
+      }else{
+        navigation.navigate('Login');
+      }
     }
   };
 

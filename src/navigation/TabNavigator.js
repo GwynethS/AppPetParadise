@@ -1,8 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Cart, Home, Profile } from "../screens";
+import { Cart, Home, OrderDetail, Profile } from "../screens";
 import Entypo from "@expo/vector-icons/Entypo";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { colors } from "../global/colors";
 import ShopStack from "./ShopStack";
@@ -16,18 +16,18 @@ const TabNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: colors.morado,
         tabBarStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: "#fff",
           height: 80,
         },
-        tabBarLabelStyle:{
-          fontFamily: 'OpenSansRegular',
+        tabBarLabelStyle: {
+          fontFamily: "OpenSansRegular",
           fontSize: 16,
           marginTop: 5,
-          marginBottom: 10
+          marginBottom: 10,
         },
-        tabBarIconStyle:{
+        tabBarIconStyle: {
           marginTop: 10,
-        }
+        },
       }}
     >
       <Tab.Screen
@@ -68,6 +68,17 @@ const TabNavigator = () => {
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="user-alt" size={24} color={color} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="OrderDetail"
+        component={OrderDetail}
+        options={{
+          tabBarLabel: "Perfil",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-alt" size={24} color={color} />
+          ),
+          tabBarItemStyle: { display: "none" },
         }}
       />
     </Tab.Navigator>

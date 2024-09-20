@@ -1,4 +1,4 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ButtonIcon from "./ButtonIcon";
 import Input from "./Input";
@@ -11,6 +11,7 @@ import {
   reduceItemCart,
   removeItemCart,
 } from "../features/cart/cartSlice";
+import { TouchableOpacity } from "react-native";
 
 const ProductCartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -49,9 +50,9 @@ const ProductCartItem = ({ item }) => {
           </ButtonIcon>
         </View>
       </View>
-      <Pressable style={styles.btnRemoveProduct} onPress={onPressRemove}>
+      <TouchableOpacity activeOpacity={0.9} style={styles.btnRemoveProduct} onPress={onPressRemove}>
         <Feather name="x" size={20} color={colors.paloRosa} />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };
