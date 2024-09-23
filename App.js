@@ -5,9 +5,12 @@ import Navigator from "./src/navigation/Navigator";
 import { Provider } from "react-redux";
 import { store } from "./src/app/store";
 import { PaperProvider } from "react-native-paper";
+import { init } from "./src/db";
 
 export default function App() {
   const [fontLoaded] = useFonts(fonts);
+
+  init();
 
   if (!fontLoaded) {
     return null;

@@ -15,6 +15,7 @@ import { colors } from "../global/colors";
 import { useLoginMutation } from "../services/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/auth/authSlice";
+import { deleteSession, insertSession } from "../db";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -35,8 +36,8 @@ const Login = ({ navigation }) => {
     try {
       //registerSchema.validateSync({ email, password, confirmPassword });
       const { data } = await triggerLogin({ email, password });
-      //deleteSession();
-      //insertSession(data);
+      deleteSession();
+      insertSession(data);
       dispatch(
         setUser({
           email: data.email,

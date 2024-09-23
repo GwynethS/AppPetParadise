@@ -21,6 +21,7 @@ import {
   useGetUserQuery,
   usePatchImageProfileMutation,
 } from "../services/user";
+import { deleteSession } from "../db";
 
 const Profile = ({ navigation }) => {
   const user = useSelector((state) => state.auth);
@@ -45,6 +46,7 @@ const Profile = ({ navigation }) => {
 
   const onLogout = () => {
     dispatch(clearUser());
+    deleteSession();
   };
 
   const redirectTo = (page) => {
