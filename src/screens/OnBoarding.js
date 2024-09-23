@@ -6,7 +6,9 @@ import Entypo from "@expo/vector-icons/Entypo";
 
 const OnBoarding = ({ navigation }) => {
   const onPress = () => {
-    navigation.replace("Main");
+    navigation.replace("Main", {
+      screen: "Home",
+    });
   };
   return (
     <>
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
     fontFamily: "DancingScriptBold",
     fontSize: 60,
     marginVertical: 30,
-    textAlign: 'center'
+    textAlign: "center",
   },
   img: {
     height: 250,

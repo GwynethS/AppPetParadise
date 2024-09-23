@@ -1,14 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const ButtonFlatOpacity = ({ children, text, btnStyle, onPress }) => {
+const ButtonFlatOpacity = ({ children, text, btnStyle, btnStyleContent, onPress }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       style={[styles.btn, btnStyle]}
       onPress={onPress}
     >
-      <View style={styles.btnContent}>
+      <View style={[styles.btnContent, btnStyleContent]}>
         {children}
         {text && <Text style={styles.btnText}>{text}</Text>}
       </View>

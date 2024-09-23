@@ -5,7 +5,6 @@ import { TouchableOpacity } from "react-native";
 
 const OrderItem = ({ navigation, item }) => {
   const onViewDetail = () => {
-    console.log('done');
     navigation.navigate("OrderDetail", { order: item });
   };
 

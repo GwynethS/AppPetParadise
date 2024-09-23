@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { colors } from "../global/colors";
 import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,9 +15,22 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { clearUser } from "../features/auth/authSlice";
 import { useGetOrdersByUserQuery } from "../services/shop";
 import OrderItem from "../components/OrderItem";
+import ImageSelector from "../components/ImageSelector";
+import * as ImagePicker from "expo-image-picker";
+import {
+  useGetUserQuery,
+  usePatchImageProfileMutation,
+} from "../services/user";
 
 const Profile = ({ navigation }) => {
   const user = useSelector((state) => state.auth);
+  const {
+    data: userData,
+  } = useGetUserQuery({ localId: user.localId });
+  const [triggerAddImageProfile] = usePatchImageProfileMutation();
+  const [image, setImage] = useState(null);
+  const [pressSelectImage, setPressSelectImage] = useState(false);
+
   const {
     data: orders,
     isLoading,
@@ -25,12 +38,70 @@ const Profile = ({ navigation }) => {
   } = useGetOrdersByUserQuery(user.localId);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (userData) setImage(userData.image);
+    else setImage(null);
+  }, [userData]);
+
   const onLogout = () => {
     dispatch(clearUser());
   };
 
   const redirectTo = (page) => {
     navigation.navigate(page);
+  };
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+      base64: true,
+    });
+
+    if (!result.canceled) {
+      setImage("data:image/jpg;base64," + result.assets[0].base64);
+      setPressSelectImage(true);
+    }
+  };
+
+  const verifyCameraPermissions = async () => {
+    const { granted } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (!granted) {
+      return false;
+    }
+    return true;
+  };
+
+  const takePhoto = async () => {
+    const isCameraOk = await verifyCameraPermissions();
+
+    if (isCameraOk) {
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        setImage("data:image/jpg;base64," + result.assets[0].base64);
+        setPressSelectImage(true);
+      }
+    }
+  };
+
+  const saveImage = () => {
+    triggerAddImageProfile({ image, localId: user.localId });
+    setPressSelectImage(false);
+  };
+
+  const deleteImage = () => {
+    triggerAddImageProfile({ image: null, localId: user.localId });
+    setImage(null);
   };
 
   return (
@@ -56,10 +127,14 @@ const Profile = ({ navigation }) => {
             <MaterialIcons name="logout" size={30} color={colors.paloRosa} />
           </TouchableOpacity>
         )}
-        <Image
-          source={require("../../assets/img/account-fill.png")}
-          style={styles.imgUser}
-        ></Image>
+        <ImageSelector
+          image={image}
+          pressSelectImage={pressSelectImage}
+          pickImage={pickImage}
+          takePhoto={takePhoto}
+          saveImage={saveImage}
+          deleteImage={deleteImage}
+        ></ImageSelector>
         {user.idToken && <Text style={styles.textHeader2}>{user.email}</Text>}
       </View>
 
@@ -118,11 +193,6 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
-  imgUser: {
-    height: 150,
-    width: 150,
-    objectFit: "cover",
-  },
   textHeader2: {
     fontFamily: "OpenSansBold",
     fontSize: 20,
@@ -149,6 +219,6 @@ const styles = StyleSheet.create({
     color: colors.morado,
   },
   ordersContainer: {
-    flex: 1
+    flex: 1,
   },
 });

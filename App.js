@@ -4,6 +4,7 @@ import { fonts } from "./src/global/fonts";
 import Navigator from "./src/navigation/Navigator";
 import { Provider } from "react-redux";
 import { store } from "./src/app/store";
+import { PaperProvider } from "react-native-paper";
 
 export default function App() {
   const [fontLoaded] = useFonts(fonts);
@@ -13,7 +14,9 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <Navigator />
+      <PaperProvider>
+        <Navigator />
+      </PaperProvider>
     </Provider>
   );
 }

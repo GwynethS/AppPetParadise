@@ -49,7 +49,6 @@ const Login = ({ navigation }) => {
         screen: "Home"
       });
     } catch (error) {
-      console.log(error);
       switch (error.path) {
         case "email":
           setErrorEmail(error.message);

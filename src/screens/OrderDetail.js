@@ -6,8 +6,6 @@ import { colors } from "../global/colors";
 const OrderDetail = ({ route }) => {
   const { order } = route.params;
 
-  console.log("ORDEN", order.items);
-
   const items = order.items;
 
   return (
