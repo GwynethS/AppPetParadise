@@ -7,6 +7,7 @@ const OrderDetailItem = ({ item }) => {
       <Image style={styles.imgCard} source={{ uri: item.imgUrl }}></Image>
       <View style={{ gap: 10 }}>
         <Text style={styles.textParagraph}>{item.name}</Text>
+        <Text style={styles.textParagraph}>Cantidad: {item.quantity}</Text>
         <Text style={styles.textHeader4}>S/. {item.subTotal.toFixed(2)}</Text>
       </View>
     </View>

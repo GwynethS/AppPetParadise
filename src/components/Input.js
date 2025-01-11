@@ -76,9 +76,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textError: {
-    fontFamily: "OpenSansRegular",
-    textAlign: "right",
-    paddingRight: 8,
+    fontFamily: "OpenSansSemiBold",
     color: colors.errorText,
     marginTop: 8,
   },

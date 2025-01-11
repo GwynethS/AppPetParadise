@@ -1,11 +1,19 @@
 import { FlatList, StatusBar, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import CategoryCard from "../components/CategoryCard";
 import { colors } from "../global/colors";
 import { useGetCategoriesQuery } from "../services/shop";
+import { setLoading } from "../features/loading/loadingSlice";
+import { useDispatch } from "react-redux";
 
 const Home = ({ navigation }) => {
   const { data: categories, isLoading, refetch} = useGetCategoriesQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(isLoading) dispatch(setLoading(true));
+    else dispatch(setLoading(false));
+  }, [isLoading]);
 
   const onPressCategory = (category) => {
     navigation.navigate("Shop", {

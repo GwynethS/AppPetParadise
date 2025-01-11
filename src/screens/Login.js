@@ -16,25 +16,60 @@ import { useLoginMutation } from "../services/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/auth/authSlice";
 import { deleteSession, insertSession } from "../db";
+import { loginSchema } from "../validations/loginSchema";
+import ModalMessage from "../components/ModalMessage";
+import { useModalMessage } from "../hooks/useModalMessage";
+import { setLoading } from "../features/loading/loadingSlice";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorUsername, setErrorUsername] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-  const [triggerLogin, { data, isSuccess, isError, error }] = useLoginMutation();
+  const [triggerLogin, { data, isLoading, isSuccess, isError }] =
+    useLoginMutation();
+  const { modalVisible, modalConfig, showModal, hideModal } = useModalMessage();
   const dispatch = useDispatch();
+
+  const validateField = async (field, value) => {
+    try {
+      await loginSchema.validateAt(field, { [field]: value });
+      if (field === "email") setErrorEmail("");
+      if (field === "password") setErrorPassword("");
+    } catch (err) {
+      if (field === "email") setErrorEmail(err.message);
+      if (field === "password") setErrorPassword(err.message);
+    }
+  };
+
+  const handleErrorLoginAlert = (title, message) => {
+    showModal({
+      type: "error",
+      title,
+      message,
+      confirmActionText: "Cerrar",
+      onConfirmAction: hideModal,
+      onDismiss: hideModal,
+    });
+  };
 
   useEffect(() => {
     if (isError) {
-      setErrorEmail("email existente");
+      handleErrorLoginAlert(
+        "Ups! Ocurrió un error",
+        "El usuario o la contraseña son incorrectos"
+      );
     }
   }, [isError]);
 
+  useEffect(() => {
+    if (isLoading) dispatch(setLoading(true));
+    else dispatch(setLoading(false));
+  }, [isLoading]);
+
   const onSubmit = async () => {
     try {
-      //registerSchema.validateSync({ email, password, confirmPassword });
+      loginSchema.validateSync({ email, password }, { abortEarly: false });
       const { data } = await triggerLogin({ email, password });
       deleteSession();
       insertSession(data);
@@ -47,18 +82,20 @@ const Login = ({ navigation }) => {
       );
 
       navigation.navigate("Main", {
-        screen: "Home"
+        screen: "Home",
       });
     } catch (error) {
-      switch (error.path) {
-        case "email":
-          setErrorEmail(error.message);
-          setErrorPassword("");
-          break;
-        case "password":
-          setErrorEmail("");
-          setErrorPassword(error.message);
-          break;
+      if (error.inner) {
+        error.inner.forEach((err) => {
+          switch (err.path) {
+            case "email":
+              setErrorEmail(err.message);
+              break;
+            case "password":
+              setErrorPassword(err.message);
+              break;
+          }
+        });
       }
     }
   };
@@ -68,36 +105,57 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollContainer}
-      showsVerticalScrollIndicator={false}
-    >
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={colors.background}
-      ></StatusBar>
-      <View style={styles.headerContainer}>
-        <Text style={styles.textHeader1}>Login</Text>
-      </View>
-      <View style={styles.formContainer}>
-        <View style={styles.inputsContainer}>
-          <Input placeholder="Email" value={email} onChangeText={(text) => setEmail(text)}>
-            <FontAwesome name="envelope" size={22} color="#676767" />
-          </Input>
-          <InputPassword value={password} onChangeText={(text) => setPassword(text)}></InputPassword>
+    <>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={colors.background}
+        ></StatusBar>
+        <View style={styles.headerContainer}>
+          <Text style={styles.textHeader1}>Login</Text>
         </View>
-        <ButtonFlatOpacity text="Iniciar sesión" onPress={onSubmit}></ButtonFlatOpacity>
-      </View>
+        <View style={styles.formContainer}>
+          <View style={styles.inputsContainer}>
+            <Input
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => {
+                setEmail(text);
+                validateField("email", text);
+              }}
+              errors={errorEmail ? [errorEmail] : []}
+            >
+              <FontAwesome name="envelope" size={22} color="#676767" />
+            </Input>
+            <InputPassword
+              value={password}
+              onChangeText={(text) => {
+                setPassword(text);
+                validateField("password", text);
+              }}
+              errors={errorPassword ? [errorPassword] : []}
+            ></InputPassword>
+          </View>
+          <ButtonFlatOpacity
+            text="Iniciar sesión"
+            onPress={onSubmit}
+          ></ButtonFlatOpacity>
+        </View>
 
-      <View style={styles.toSignUpContainer}>
-        <Text style={styles.textParagraph}>¿Aún no tienes una cuenta?</Text>
-        <TouchableOpacity activeOpacity={0.9} onPress={redirectTo}>
-          <Text style={[styles.textParagraph, styles.textLink]}>
-            Regístrate
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <View style={styles.toSignUpContainer}>
+          <Text style={styles.textParagraph}>¿Aún no tienes una cuenta?</Text>
+          <TouchableOpacity activeOpacity={0.9} onPress={redirectTo}>
+            <Text style={[styles.textParagraph, styles.textLink]}>
+              Regístrate
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+      <ModalMessage visible={modalVisible} {...modalConfig}></ModalMessage>
+    </>
   );
 };
 

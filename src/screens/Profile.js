@@ -1,5 +1,4 @@
 import {
-  Image,
   FlatList,
   StatusBar,
   StyleSheet,
@@ -22,11 +21,12 @@ import {
   usePatchImageProfileMutation,
 } from "../services/user";
 import { deleteSession } from "../db";
+import { setLoading } from "../features/loading/loadingSlice";
 
 const Profile = ({ navigation }) => {
   const user = useSelector((state) => state.auth);
   const {
-    data: userData,
+    data: userData, isLoading: isLoadingUser
   } = useGetUserQuery({ localId: user.localId });
   const [triggerAddImageProfile] = usePatchImageProfileMutation();
   const [image, setImage] = useState(null);
@@ -34,19 +34,26 @@ const Profile = ({ navigation }) => {
 
   const {
     data: orders,
-    isLoading,
+    isLoading: isLoadingOrders,
     refetch,
   } = useGetOrdersByUserQuery(user.localId);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLoadingUser || isLoadingOrders) dispatch(setLoading(true));
+    else dispatch(setLoading(false));
+  }, [isLoadingUser, isLoadingOrders]);
 
   useEffect(() => {
     if (userData) setImage(userData.image);
     else setImage(null);
   }, [userData]);
 
-  const onLogout = () => {
-    dispatch(clearUser());
-    deleteSession();
+  const onLogout = async () => {
+    dispatch(setLoading(true)); 
+    await deleteSession(); 
+    dispatch(clearUser()); 
+    dispatch(setLoading(false)); 
   };
 
   const redirectTo = (page) => {

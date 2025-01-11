@@ -11,33 +11,45 @@ import Input from "../components/Input";
 import InputPassword from "../components/InputPassword";
 import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { colors } from "../global/colors";
 import { useSignupMutation } from "../services/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/auth/authSlice";
+import { signUpSchema } from "../validations/signUpSchema";
+import { deleteSession, insertSession } from "../db";
 
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorUsername, setErrorUsername] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-  const [triggerSignUp, { data, isSuccess, isError, error }] = useSignupMutation();
+  const [triggerSignUp, { data, isSuccess, isError, error }] =
+    useSignupMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isError) {
-      setErrorEmail("email existente");
+      setErrorEmail("Este email ya existe.");
     }
   }, [isError]);
 
+  const validateField = async (field, value) => {
+    try {
+      await signUpSchema.validateAt(field, { [field]: value });
+      if (field === "email") setErrorEmail("");
+      if (field === "password") setErrorPassword("");
+    } catch (err) {
+      if (field === "email") setErrorEmail(err.message);
+      if (field === "password") setErrorPassword(err.message);
+    }
+  };
+
   const onSubmit = async () => {
     try {
-      //registerSchema.validateSync({ email, password, confirmPassword });
+      signUpSchema.validateSync({ email, password }, { abortEarly: false });
       const { data } = await triggerSignUp({ email, password });
-      //deleteSession();
-      //insertSession(data);
+      deleteSession();
+      insertSession(data);
       dispatch(
         setUser({
           email: data.email,
@@ -47,18 +59,20 @@ const SignUp = ({ navigation }) => {
       );
 
       navigation.navigate("Main", {
-        screen: "Home"
+        screen: "Home",
       });
     } catch (error) {
-      switch (error.path) {
-        case "email":
-          setErrorEmail(error.message);
-          setErrorPassword("");
-          break;
-        case "password":
-          setErrorEmail("");
-          setErrorPassword(error.message);
-          break;
+      if (error.inner) {
+        error.inner.forEach((err) => {
+          switch (err.path) {
+            case "email":
+              setErrorEmail(err.message);
+              break;
+            case "password":
+              setErrorPassword(err.message);
+              break;
+          }
+        });
       }
     }
   };
@@ -81,12 +95,30 @@ const SignUp = ({ navigation }) => {
       </View>
       <View style={styles.formContainer}>
         <View style={styles.inputsContainer}>
-          <Input placeholder="Email" value={email} onChangeText={(text) => setEmail(text)}>
+          <Input
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+              validateField("email", text);
+            }}
+            errors={errorEmail ? [errorEmail] : []}
+          >
             <FontAwesome name="envelope" size={22} color="#676767" />
           </Input>
-          <InputPassword value={password} onChangeText={(text) => setPassword(text)}></InputPassword>
+          <InputPassword
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+              validateField("password", text);
+            }}
+            errors={errorPassword ? [errorPassword] : []}
+          ></InputPassword>
         </View>
-        <ButtonFlatOpacity text="Regístrate" onPress={onSubmit}></ButtonFlatOpacity>
+        <ButtonFlatOpacity
+          text="Regístrate"
+          onPress={onSubmit}
+        ></ButtonFlatOpacity>
       </View>
 
       <View style={styles.toLoginContainer}>

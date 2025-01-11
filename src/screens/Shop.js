@@ -12,6 +12,8 @@ import SearchInput from "../components/SearchInput";
 import ProductCard from "../components/ProductCard";
 import { useGetProductsQuery } from "../services/shop";
 import Feather from "@expo/vector-icons/Feather";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../features/loading/loadingSlice";
 
 const Shop = ({ route, navigation }) => {
   const category = route?.params?.category || null;
@@ -19,6 +21,13 @@ const Shop = ({ route, navigation }) => {
   const { data: products, isLoading, refetch } = useGetProductsQuery(category);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLoading) dispatch(setLoading(true));
+    else dispatch(setLoading(false));
+  }, [isLoading]);
 
   useEffect(() => {
     if (products) {

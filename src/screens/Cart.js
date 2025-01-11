@@ -1,18 +1,40 @@
 import { FlatList, StatusBar, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { colors } from "../global/colors";
 import ProductCartItem from "../components/ProductCartItem";
 import ButtonFlatOpacity from "../components/ButtonFlatOpacity";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../features/cart/cartSlice";
 import { usePostOrderMutation } from "../services/shop";
+import ModalMessage from "../components/ModalMessage";
+import { useModalMessage } from "../hooks/useModalMessage";
 
-const Cart = ({navigation}) => {
+const Cart = ({ navigation }) => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.auth);
   const localId = useSelector((state) => state.auth.localId);
-  const [triggerPostOrder] = usePostOrderMutation();
+  const [triggerPostOrder, { isSuccess, isError }] = usePostOrderMutation();
+  const { modalVisible, modalConfig, showModal, hideModal } = useModalMessage();
   const dispatch = useDispatch();
+
+  const handleShowAlert = (
+    type,
+    title,
+    message,
+    confirmActionText,
+    onConfirmAction,
+    onDismiss
+  ) => {
+    showModal({
+      type,
+      title,
+      message,
+      confirmActionText,
+      onConfirmAction,
+      showCancelAction: false,
+      onDismiss,
+    });
+  };
 
   const onCheckout = () => {
     if (cart.items.length > 0) {
@@ -24,38 +46,86 @@ const Cart = ({navigation}) => {
         };
         triggerPostOrder({ localId, order });
         dispatch(clearCart());
-      }else{
-        navigation.navigate('Login');
+      } else {
+        handleShowAlert(
+          "warning",
+          "No ha iniciado sesión",
+          "Necesita iniciar sesión para realizar la compra",
+          "Iniciar sesión",
+          () => {
+            navigation.navigate("Login");
+            hideModal();
+          },
+          hideModal
+        );
       }
+    } else {
+      handleShowAlert(
+        "warning",
+        "El carrito está vacío",
+        "Agregregue productos a su carrito y realice su compra",
+        "Cerrar",
+        hideModal,
+        hideModal
+      );
     }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      handleShowAlert(
+        "success",
+        "¡Felicidades!",
+        "Su compra fue procesada con éxito",
+        "Cerrar",
+        hideModal,
+        hideModal
+      );
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      handleShowAlert(
+        "error",
+        "Ups! Ocurrió un error",
+        "No se pudo completar la compra",
+        "Cerrar",
+        hideModal,
+        hideModal
+      );
+    }
+  }, [isError]);
+
   return (
-    <View style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={colors.background}
-      ></StatusBar>
-      <FlatList
-        data={cart.items}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        style={{ height: "90%" }}
-        renderItem={({ item }) => (
-          <ProductCartItem item={item}></ProductCartItem>
-        )}
-      ></FlatList>
-      <View style={styles.cartFooter}>
-        <View style={styles.cartTotal}>
-          <Text style={styles.textHeader3}>Total: </Text>
-          <Text style={styles.textTotal}>S/. {cart.total.toFixed(2)}</Text>
+    <>
+      <View style={styles.container}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={colors.background}
+        ></StatusBar>
+        <FlatList
+          data={cart.items}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          style={{ height: "90%" }}
+          renderItem={({ item }) => (
+            <ProductCartItem item={item}></ProductCartItem>
+          )}
+        ></FlatList>
+        <View style={styles.cartFooter}>
+          <View style={styles.cartTotal}>
+            <Text style={styles.textHeader3}>Total: </Text>
+            <Text style={styles.textTotal}>S/. {cart.total.toFixed(2)}</Text>
+          </View>
+          <ButtonFlatOpacity
+            text="Comprar"
+            onPress={onCheckout}
+          ></ButtonFlatOpacity>
         </View>
-        <ButtonFlatOpacity
-          text="Comprar"
-          onPress={onCheckout}
-        ></ButtonFlatOpacity>
       </View>
-    </View>
+      <ModalMessage visible={modalVisible} {...modalConfig}></ModalMessage>
+    </>
   );
 };
 
