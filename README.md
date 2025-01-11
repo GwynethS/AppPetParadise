@@ -10,8 +10,8 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Información del usuario:** Muestra detalles del usuario y sus órdenes de compra.
 
 <p align="center">
-  <img src="./screenshot/Profile.jpeg" width="300">
-  <img src="./screenshot/Profile2.jpeg" width="300">
+  <img src="./assets/readme/Profile.jpeg" width="300">
+  <img src="./assets/readme/Profile2.jpeg" width="300">
 </p>
 
 ### Pantalla de Login y SignUp
@@ -20,8 +20,8 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Registro sencillo:** Permite a los usuarios iniciar sesión y registrarse de manera segura, asegurando que sus datos estén protegidos.
 
 <p align="center">
-  <img src="./screenshot/Login.jpeg" width="300">
-  <img src="./screenshot/SignUp.jpeg" width="300">
+  <img src="./assets/readme/Login.jpeg" width="300">
+  <img src="./assets/readme/SignUp.jpeg" width="300">
 </p>
 
 ### Pantalla de Inicio
@@ -30,7 +30,7 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Acceso directo a productos:** Al hacer clic en una categoría, se navega a la pantalla de productos correspondiente, mejorando la experiencia del usuario.
 
 <p align="center">
-  <img src="./screenshot/Home.jpeg" width="300">
+  <img src="./assets/readme/Home.jpeg" width="300">
 </p>
 
 ### Pantalla de Productos
@@ -40,7 +40,7 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Detalles accesibles:** Al hacer clic en un producto, se navega a la pantalla de detalles del producto para obtener más información.
 
 <p align="center">
-  <img src="./screenshot/Products.jpeg" width="300">
+  <img src="./assets/readme/Products.jpeg" width="300">
 </p>
 
 ### Pantalla de Detalles del Producto
@@ -49,7 +49,7 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Agregar al carrito:** Permite agregar el producto al carrito de compras de manera sencilla.
 
 <p align="center">
-  <img src="./screenshot/ProductDetail.jpeg" width="300">
+  <img src="./assets/readme/ProductDetail.jpeg" width="300">
 </p>
 
 ### Pantalla de Carrito de Compras
@@ -58,7 +58,7 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Finalizar compra:** Incluye un botón para proceder al pago, permitiendo a los usuarios completar su compra de manera rápida y eficiente.
 
 <p align="center">
-  <img src="./screenshot/Cart.jpeg" width="300">
+  <img src="./assets/readme/Cart.jpeg" width="300">
 </p>
 
 ### Pantalla de Detalle de Orden de Compra
@@ -66,7 +66,7 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
 - **Historial de compras:** Permite a los usuarios ver los detalles de sus órdenes pasadas, incluyendo productos adquiridos y precios.
 
 <p align="center">
-  <img src="./screenshot/OrderDetail.jpeg" width="300">
+  <img src="./assets/readme/OrderDetail.jpeg" width="300">
 </p>
 
 ## Tecnologías Utilizadas
