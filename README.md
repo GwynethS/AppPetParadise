@@ -2,6 +2,20 @@
 
 PetParadise es una aplicación de comercio electrónico para mascotas desarrollada con React Native. Ofrece una experiencia de compra completa y fácil de usar, permitiendo a los usuarios navegar, buscar y adquirir productos para sus mascotas de manera sencilla.
 
+## Colaboradores
+
+[![GitHub](https://img.shields.io/badge/Deyvid_Guevara-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DeyvidGC)
+
+## Tecnologías Utilizadas
+
+- **Firebase Authentication:** Implementa el sistema de autenticación de Firebase para gestionar la seguridad de la aplicación.
+- **React Native Navigation Stack:** Gestiona la navegación entre pantallas.
+- **React Native Navigation Bottom Tab:** Gestiona la navegación entre pestañas.
+- **Expo-Image-Picker:** Facilita la carga de imágenes de perfil.
+- **Redux:** Centraliza y gestiona el estado de la aplicación.
+- **RTK Query y Firebase:** Realiza operaciones de lectura/escritura en la base de datos.
+
+
 ## Funcionalidades Principales
 
 ### Pantalla de Perfil
@@ -69,11 +83,3 @@ PetParadise es una aplicación de comercio electrónico para mascotas desarrolla
   <img src="./assets/readme/OrderDetail.jpeg" width="300">
 </p>
 
-## Tecnologías Utilizadas
-
-- **Firebase Authentication:** Implementa el sistema de autenticación de Firebase para gestionar la seguridad de la aplicación.
-- **React Native Navigation Stack:** Gestiona la navegación entre pantallas.
-- **React Native Navigation Bottom Tab:** Gestiona la navegación entre pestañas.
-- **Expo-Image-Picker:** Facilita la carga de imágenes de perfil.
-- **Redux:** Centraliza y gestiona el estado de la aplicación.
-- **RTK Query y Firebase:** Realiza operaciones de lectura/escritura en la base de datos.
